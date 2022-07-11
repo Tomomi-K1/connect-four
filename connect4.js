@@ -75,6 +75,9 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  if (checkForWin()) {
+    return;
+  }
   const ball = document.createElement("div");
   ball.setAttribute("class", "piece");
   document.querySelector(`td[id="${y}-${x}"`).append(ball)
