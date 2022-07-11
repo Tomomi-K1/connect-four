@@ -17,7 +17,7 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard(HEIGHT, WIDTH) {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  board =[...Array(HEIGHT)].map(() => Array(WIDTH));
+  board =[...Array(HEIGHT)].map(() => Array(WIDTH).fill(null));
   return board;
  }
 
@@ -89,7 +89,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
-  alert("it's a tie!");
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -97,7 +97,7 @@ function endGame(msg) {
 function handleClick(evt) {
   // get x from ID of clicked cell
   let x = +evt.target.id;
-  console.log("x", x);
+  // console.log("x", x);
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
@@ -105,7 +105,7 @@ function handleClick(evt) {
   if (y === null) {
     return;
   }
-  console.log("y", y);
+  // console.log("y", y);
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
@@ -119,8 +119,8 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if(){
-    endGame();
+  if(board.every(arr => !arr.includes(null))){
+    endGame("It's a tie!");
   }
 
 
@@ -132,6 +132,7 @@ function handleClick(evt) {
   } else{
     currPlayer =1;
   }
+  
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -155,12 +156,14 @@ function checkForWin() {
   // TODO: read and understand this code. Add comments to help you.
 
   for (let y = 0; y < HEIGHT; y++) {
+    // run each row
     for (let  x = 0; x < WIDTH; x++) {
+      //get 4  cells from each [y, x] position
       const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
       const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
       const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
       const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
-
+      //check if each horiz, vert, diagDR, diagDL of four cells are fill with currPlayer
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
