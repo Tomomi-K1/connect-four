@@ -175,9 +175,13 @@ function checkForWin() {
   }
 }
 
-// restartBtn.addEventListener(function(e){
-  
-// });
+restartBtn.addEventListener("click", function(e){
+  const balls = document.querySelectorAll('.piece');
+  for(let ball of balls){
+    ball.remove();
+  }
+  makeBoard(HEIGHT, WIDTH);
+});
 
 makeBoard(HEIGHT, WIDTH);
 makeHtmlBoard();
