@@ -16,10 +16,18 @@ const restartBtn = document.querySelector('button');
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
 
+
+///I don't need to pass Height and width? Solution didn't
 function makeBoard(HEIGHT, WIDTH) {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   board =[...Array(HEIGHT)].map(() => Array(WIDTH).fill(null));
-  return board;
+  return board; 
+
+  // for (let y = 0; y < HEIGHT; y++) {
+  //     board.push(Array.from({ length: WIDTH }));
+  // }
+  // console.log(HEIGHT);
+  
  }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -49,7 +57,7 @@ function makeHtmlBoard() {
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     //when creating 1 tr create the same amount of td as Width and attached to the tr row.
-    for (var x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
       cell.setAttribute("id", `${y}-${x}`);
       row.append(cell);
@@ -68,7 +76,14 @@ function findSpotForCol(x) {
   }
   
   return colNum;
- 
+
+  //Springboard answer//
+  // for (let y = HEIGHT - 1; y >= 0; y--) {
+  //   if (!board[y][x]) {
+  //     return y;
+  //   }
+  // }
+  // return null;
   
 }
 
@@ -81,12 +96,14 @@ function placeInTable(y, x) {
   }
   const ball = document.createElement("div");
   ball.setAttribute("class", "piece");
+  ball.classList.add(`p${currPlayer}`)
+  // if(currPlayer===1){
+  //   ball.classList.add("p1");
+  // } else {
+  //   ball.classList.add("p2");
+  // }
+
   document.querySelector(`td[id="${y}-${x}"`).append(ball)
-  if(currPlayer===1){
-    ball.classList.add("p1");
-  } else {
-    ball.classList.add("p2");
-  }
 }
 
 /** endGame: announce game end */
@@ -123,19 +140,24 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if(board.every(arr => !arr.includes(null))){
-    endGame("It's a tie!");
-  }
+  // if(board.every(arr => !arr.includes(null))){
+  //   endGame("It's a tie!");
+  // }
 
+  if (board.every(row => row.every(cell => cell))) {
+    return endGame('Tie!');
+  }
 
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
-  if(currPlayer===1){
-    currPlayer = 2;
-  } else{
-    currPlayer =1;
-  }
+  // if(currPlayer===1){
+  //   currPlayer = 2;
+  // } else{
+  //   currPlayer =1;
+  // }
+
+  currPlayer = currPlayer === 1 ? 2 : 1;
   
 }
 
